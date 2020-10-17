@@ -1,0 +1,97 @@
+service: vehicle-service
+
+frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-2
+
+  apiKeys:
+    - vehicle-service-apikey
+  environment:
+    VEHICLE_TABLE: vehicle-${opt:stage, self:provider.stage}
+    VEHICLE_NAME_TABLE: "vehicle-name-${opt:stage, self:provider.stage}"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/vehicle-*"
+
+functions:
+  vehicleSubmission:
+    handler: api/vehicle.submit
+    memorySize: 128
+    description: Submit vehicle information and starts interview process.
+    events:
+      - http: 
+          path: vehicle
+          method: post
+          cors: true
+          private: true
+  listVehicle:
+    handler: api/vehicle.list
+    memorySize: 128
+    description: List all vehicles
+    events:
+      - http: 
+          path: vehicle
+          method: get
+          cors: true
+          private: true     
+  vehicleDetails:
+    handler: api/vehicle.get
+    events:
+      - http:
+          path: vehicle/{id}
+          method: get
+          cors: true
+          private: true
+  getInfoVehicle:
+    handler: api/vehicle.getInfoVehicle
+    events:
+      - http:
+          path: vehicle/info-by-id/{id}
+          method: get
+          cors: true             
+          private: true
+resources:
+  Resources:
+    VehicleDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: "id"
+            AttributeType: "S"   
+        KeySchema:
+          -
+            AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        StreamSpecification:
+          StreamViewType: "NEW_IMAGE"
+        TableName: ${self:provider.environment.VEHICLE_TABLE}
+    VehicleNameDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: "name"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "name"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: ${self:provider.environment.VEHICLE_NAME_TABLE}

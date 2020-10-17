@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "c49db60b-2005-4698-aec2-c49f00d7a75c",
+		"name": "API-REST-StarWars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crea-Vehiculo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "OE8VU0gpTJ7JhQyp5WonC6mqDbYlYHzZ1nbQXYFw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Marte\",\r\n    \"diametro\": \"10465\",\r\n    \"periodoRotacion\": \"23\",\r\n    \"periodoOrbital\": \"304\",\r\n    \"gravedad\": \"1\",\r\n    \"poblacion\": \"120000\",\r\n    \"clima\": \"Arid\",\r\n    \"terreno\": \"Dessert\",\r\n    \"aguaSuperficial\": \"1\",\r\n    \"residentes\": [\r\n        \"https://swapi.py4e.com/api/people/1/\"\r\n    ],\r\n    \"peliculas\": [\r\n        \"https://swapi.py4e.com/api/films/1/\"\r\n    ],\r\n    \"url\": \"https://swapi.py4e.com/api/planets/1/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://v8j21vmsfh.execute-api.us-east-2.amazonaws.com/dev/planet",
+					"protocol": "https",
+					"host": [
+						"v8j21vmsfh",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"planet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListarVehiculo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "OE8VU0gpTJ7JhQyp5WonC6mqDbYlYHzZ1nbQXYFw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://v8j21vmsfh.execute-api.us-east-2.amazonaws.com/dev/planet",
+					"protocol": "https",
+					"host": [
+						"v8j21vmsfh",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"planet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerDetalleVehiculoPorID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "OE8VU0gpTJ7JhQyp5WonC6mqDbYlYHzZ1nbQXYFw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://v8j21vmsfh.execute-api.us-east-2.amazonaws.com/dev/planet/:id",
+					"protocol": "https",
+					"host": [
+						"v8j21vmsfh",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"planet",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "98fd7eb0-f4d6-11ea-9ba6-fb4839fa53c7"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
