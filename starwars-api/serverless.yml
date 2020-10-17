@@ -8,6 +8,9 @@ provider:
   stage: dev
   region: us-east-2
 
+  apiKeys:
+    - vehicle-service-apikey
+
   environment:
     VEHICLE_TABLE: vehicle-${opt:stage, self:provider.stage}
     VEHICLE_NAME_TABLE: "vehicle-name-${opt:stage, self:provider.stage}"
@@ -27,18 +30,18 @@ functions:
     description: Submit vehicle information and starts interview process.
     events:
       - http: 
-          path: vehicle
+          path: vehicles
           method: post
           cors: true
           
-  listVehicle:
+  listVehicles:
     handler: api/vehicle.list
     memorySize: 128
     description: List all vehicles
     events:
       - http: 
           path: vehicle
-          method: get
+          method: get 
           cors: true
                
   vehicleDetails:
@@ -59,7 +62,7 @@ functions:
           
 resources:
   Resources:
-    VehicleDynamoDbTable:
+    VehiclesDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:
