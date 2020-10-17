@@ -8,8 +8,6 @@ provider:
   stage: dev
   region: us-east-2
 
-  apiKeys:
-    - vehicle-service-apikey
   environment:
     VEHICLE_TABLE: vehicle-${opt:stage, self:provider.stage}
     VEHICLE_NAME_TABLE: "vehicle-name-${opt:stage, self:provider.stage}"
@@ -32,7 +30,7 @@ functions:
           path: vehicle
           method: post
           cors: true
-          private: true
+          
   listVehicle:
     handler: api/vehicle.list
     memorySize: 128
@@ -42,7 +40,7 @@ functions:
           path: vehicle
           method: get
           cors: true
-          private: true     
+               
   vehicleDetails:
     handler: api/vehicle.get
     events:
@@ -50,7 +48,7 @@ functions:
           path: vehicle/{id}
           method: get
           cors: true
-          private: true
+          
   getInfoVehicle:
     handler: api/vehicle.getInfoVehicle
     events:
@@ -58,7 +56,7 @@ functions:
           path: vehicle/info-by-id/{id}
           method: get
           cors: true             
-          private: true
+          
 resources:
   Resources:
     VehicleDynamoDbTable:
